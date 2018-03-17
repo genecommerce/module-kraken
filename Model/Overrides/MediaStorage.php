@@ -13,8 +13,6 @@ use Gene\Kraken\Model\Optimise;
  */
 class MediaStorage extends Uploader
 {
-    use FrameworkUploaderSaveTrait;
-
     /**
      * @var Optimise
      */
@@ -37,5 +35,26 @@ class MediaStorage extends Uploader
     ) {
         $this->optimise = $optimise;
         parent::__construct($fileId, $coreFileStorageDb, $coreFileStorage, $validator);
+    }
+
+    /**
+     * Override save method to optimise tmp image first.
+     * Would have preferred to put this in an interceptor put it is impossible due to private/protected methods.
+     * @param string $destinationFolder
+     * @param null $newFileName
+     * @return array
+     * @todo Make this a trait
+     * @throws \Exception
+     */
+    public function save($destinationFolder, $newFileName = null)
+    {
+        $this->_validateFile();
+
+        $this->optimise->byPath(
+            $this->_file['tmp_name'],
+            $this->getFileExtension()
+        );
+
+        return parent::save($destinationFolder, $newFileName);
     }
 }
