@@ -4,19 +4,20 @@
   "type": "magento2-module",
   "version": "0.0.0",
   "require": {
-    "kraken-io/kraken-php": "^1.2"
+    "kraken-io/kraken-php": "^1.2",
+    "magento/module-config": "^100.2.0"
   },
   "license": [
     "OSL-3.0",
     "AFL-3.0"
   ],
-  "extra": {
-    "map": [
-      [
-        "*",
-        "Gene/Kraken"
-      ]
-    ]
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Magento\\Kraken\\": ""
+    }
   },
   "authors": [
     {

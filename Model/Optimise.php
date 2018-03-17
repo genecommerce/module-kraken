@@ -2,8 +2,10 @@
 
 namespace Gene\Kraken\Model;
 
-use \Psr\Log\LoggerInterface;
-use \Kraken;
+use Psr\Log\LoggerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Kraken;
+use Magento\Config\Model\Config\Backend\Encrypted;
 
 /**
  * Class Optimise
@@ -12,20 +14,37 @@ use \Kraken;
  */
 class Optimise
 {
+    const ACTIVE_CONFIG_PATH = 'gene_kraken/general/active';
+    const KEY_CONFIG_PATH = 'gene_kraken/api/key';
+    const SECRET_CONFIG_PATH = 'gene_kraken/api/secret';
+
     /**
      * @var Kraken
      */
     private $kraken;
 
     /**
-     * @var Kraken
+     * NULL when no connection has been attempted.
+     * FALSE when connection failed
+     * Instance of Kraken when connection successful.
+     * @var Kraken|null|false
      */
-    private $krakenInstance;
+    private $krakenInstance = null;
+
+    /**
+     * @var Encrypted
+     */
+    private $encrypted;
 
     /**
      * @var LoggerInterface
      */
     protected $logger;
+
+    /**
+     * @var ScopeConfigInterface
+     */
+    protected $scopeConfig;
 
     /**
      * Optimise constructor.
@@ -34,10 +53,14 @@ class Optimise
      */
     public function __construct(
         LoggerInterface $logger,
-        Kraken $kraken
+        Kraken $kraken,
+        ScopeConfigInterface $scopeConfig,
+        Encrypted $encrypted
     ) {
         $this->logger = $logger;
         $this->kraken = $kraken;
+        $this->scopeConfig = $scopeConfig;
+        $this->encrypted = $encrypted;
     }
 
     /**
@@ -46,17 +69,38 @@ class Optimise
      */
     private function getKraken()
     {
-        if (!$this->krakenInstance) {
-            $this->krakenInstance = new Kraken(
-                '422791327b390b147780fb8eb361ed6d',
-                'b34d238d54663ce349c44f282cdc39967ba55223'
-            );
+        if ($this->krakenInstance === null) {
+            $enabled = $this->getConfigVal(self::ACTIVE_CONFIG_PATH);
+            $key = $this->getConfigVal(self::KEY_CONFIG_PATH);
+            $secret = $this->getConfigVal(self::SECRET_CONFIG_PATH);
+
+            if ($enabled && $key && $secret) {
+                $this->krakenInstance = new Kraken($key, $secret);
+            } else {
+                $this->krakenInstance = false;
+            }
         }
 
         return $this->krakenInstance;
     }
 
     /**
+     * Get and decrypt config values
+     * @param $path string
+     * @return mixed|string
+     */
+    private function getConfigVal($path)
+    {
+        $val = $this->scopeConfig->getValue($path);
+        if ($path == self::KEY_CONFIG_PATH || $path == self::SECRET_CONFIG_PATH) {
+            $val = $this->encrypted->processValue($val);
+        }
+
+        return $val;
+    }
+
+    /**
+     * Optimise file by local file path
      * @param $filePath
      * @param null $extension
      * @return array|bool|mixed|null
@@ -68,6 +112,10 @@ class Optimise
         }
 
         if (!$extension || !in_array($extension, ['png', 'jpg', 'gif'])) {
+            return false;
+        }
+
+        if (!$this->getKraken()) {
             return false;
         }
 
@@ -87,7 +135,6 @@ class Optimise
             return $response;
         }
 
-        // @todo add a flash message?
         $this->logger->debug("Unable to write optimised version of " . $filePath . " to disk.");
         return false;
     }
