@@ -20,7 +20,7 @@ class FrameworkUploader extends Uploader
 
     /**
      * FrameworkUploader constructor.
-     * @param $fileId
+     * @param string $fileId
      * @param Optimise $optimise
      */
     public function __construct(

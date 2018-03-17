@@ -20,7 +20,7 @@ class MediaStorage extends Uploader
 
     /**
      * Uploader constructor.
-     * @param $fileId
+     * @param string $fileId
      * @param \Magento\MediaStorage\Helper\File\Storage\Database $coreFileStorageDb
      * @param \Magento\MediaStorage\Helper\File\Storage $coreFileStorage
      * @param \Magento\MediaStorage\Model\File\Validator\NotProtectedExtension $validator
