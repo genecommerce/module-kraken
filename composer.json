@@ -1,0 +1,29 @@
+{
+  "name": "gene/module-kraken",
+  "description": "",
+  "type": "magento2-module",
+  "version": "0.0.0",
+  "require": {
+    "kraken-io/kraken-php": "^1.2"
+  },
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "extra": {
+    "map": [
+      [
+        "*",
+        "Gene/Kraken"
+      ]
+    ]
+  },
+  "authors": [
+    {
+      "name": "Aidan Threadgold",
+      "homepage": "http://gene.co.uk",
+      "role": "Lead Developer",
+      "email": "aidan@gene.co.uk"
+    }
+  ]
+}
