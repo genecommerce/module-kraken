@@ -2,4 +2,12 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\MediaStorage\Model\File\Uploader" type="Gene\Kraken\Model\Overrides\MediaStorage" />
     <preference for="Magento\Framework\File\Uploader" type="Gene\Kraken\Model\Overrides\FrameworkUploader" />
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="gene_kraken_optimise" xsi:type="object">Gene\Kraken\Console\Command\OptimiseCommand</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
