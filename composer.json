@@ -1,6 +1,6 @@
 {
   "name": "gene/module-kraken",
-  "description": "",
+  "description": "Optimise images uploaded through the Magento admin with Kraken.io from GENE Commerce",
   "type": "magento2-module",
   "version": "1.0.0",
   "require": {
