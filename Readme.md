@@ -26,4 +26,6 @@ The core Magento class `Magento\Framework\File\Uploader` is overriden in order t
 If Kraken does not return a valid response, [the error is logged](https://github.com/genecommerce/module-kraken/blob/develop/Model/Optimise.php#L129) to the core Magento log files. Equally if Kraken does not return a response within 30 seconds the optimisation will be skipped. In all instances, the module fails gracefully in order to ensure the image is still uploaded.
 
 ## Authors
-1. [Aidan Threadgold (Gene Commerce, Lead Developer)](https://twitter.com/AidanThreadgold)
+This module was built by [GENE Commerce](http://www.gene.co.uk/).
+
+- [Aidan Threadgold (Lead Developer)](https://twitter.com/AidanThreadgold)
