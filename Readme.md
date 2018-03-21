@@ -21,7 +21,7 @@ This module is provided as open source with no support provided.
 7) Save your configuration and flush the Magento config cache
 
 ## How does it work?
-The core Magento class `Magento\Framework\File\Uploader` is overriden in order to send any uploaded images (in their temporary storage state) to Kraken for optimisation ([code reference)[https://github.com/genecommerce/module-kraken/blob/develop/Model/Overrides/FrameworkUploader.php#L43])). This ensures any subsequent resizing by the Magento platform is done on the optimised image.
+The core Magento class `Magento\Framework\File\Uploader` is overriden in order to send any uploaded images (in their temporary storage state) to Kraken for optimisation ([code reference](https://github.com/genecommerce/module-kraken/blob/develop/Model/Overrides/FrameworkUploader.php#L43)). This ensures any subsequent resizing by the Magento platform is done on the optimised image.
 
 If Kraken does not return a valid response, [the error is logged](https://github.com/genecommerce/module-kraken/blob/develop/Model/Optimise.php#L129) to the core Magento log files. Equally if Kraken does not return a response within 30 seconds the optimisation will be skipped. In all instances, the module fails gracefully in order to ensure the image is still uploaded.
 
