@@ -2,7 +2,7 @@
   "name": "gene/module-kraken",
   "description": "",
   "type": "magento2-module",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "require": {
     "kraken-io/kraken-php": "^1.2",
     "magento/module-config": "101.0.*"
