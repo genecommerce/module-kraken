@@ -9,7 +9,7 @@ This module is provided as open source with no support provided.
 
 ## Requirements
 1) A [Kraken](https://kraken.io/) account
-3) Magento 2.2+ Commerce/OpenSource
+3) Magento 2.1 and 2.2+ Commerce/OpenSource
 
 ## Setup Guide
 1) Create an account on [Kraken](https://kraken.io/)
