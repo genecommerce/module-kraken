@@ -63,10 +63,10 @@ class OptimiseCommand extends Command
         $paths = array();
         foreach ($iterator as $path => $file) {
             $ext = $file->getExtension();
-            if ($file->isFile() && in_array($ext, ['gif', 'jpg', 'jpeg', 'png'])) {
-                //@todo make this configurable as parameter
-                if (strpos($path, '/cache/') === false) {
-                   $paths[] = [$path, $ext];
+            //@todo make this configurable as parameter
+            if (strpos($path, '/cache/') === false) {
+                if ($file->isFile() && in_array($ext, ['gif', 'jpg', 'jpeg', 'png'])) {
+                    $paths[] = [$path, $ext];
                 }
             }
         }
