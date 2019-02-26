@@ -48,6 +48,9 @@ class OptimiseCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dir = $input->getArgument('directory');
+
+        $skip = $input->getArgument('skip-cache');
+
         if (!is_dir($dir)) {
             $output->writeln('<error>Invalid Directory Specified</error>');
             return $output;
@@ -62,13 +65,16 @@ class OptimiseCommand extends Command
         );
         $paths = array();
         foreach ($iterator as $path => $file) {
-            $ext = $file->getExtension();
-            //@todo make this configurable as parameter
-            if (strpos($path, '/cache/') === false) {
-                if ($file->isFile() && in_array($ext, ['gif', 'jpg', 'jpeg', 'png'])) {
-                    $paths[] = [$path, $ext];
-                }
+            if ($skip && strpos($path, '/cache/') !== false) {
+                continue;
             }
+
+            $ext = $file->getExtension();
+
+            if ($file->isFile() && in_array($ext, ['gif', 'jpg', 'jpeg', 'png'])) {
+                $paths[] = [$path, $ext];
+            }
+
         }
 
         if (count($paths) < 1) {
@@ -106,6 +112,13 @@ class OptimiseCommand extends Command
                 InputArgument::REQUIRED,
                 'Full path to the directory to optimise'
             ),
+            new InputArgument(
+                'skip-cache',
+                InputArgument::OPTIONAL,
+                'Skip cache folder - set 1 to skip cache folders',
+                false
+            ),
         ];
     }
+
 }
