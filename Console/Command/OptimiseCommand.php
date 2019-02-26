@@ -15,6 +15,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class OptimiseCommand extends Command
 {
+
+    /**
+     * Directory param name constant
+     */
+    const DIRECTORY = 'directory';
+
+    /**
+     * Skip cache param name constant
+     */
+    const SKIP_CACHE = 'skipcache';
+
+
     /**
      * @var \Gene\Kraken\Model\Optimise
      */
@@ -47,9 +59,9 @@ class OptimiseCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dir = $input->getArgument('directory');
+        $dir = $input->getArgument(self::DIRECTORY);
 
-        $skip = $input->getArgument('skip-cache');
+        $skip = $input->getArgument(self::SKIP_CACHE);
 
         if (!is_dir($dir)) {
             $output->writeln('<error>Invalid Directory Specified</error>');
@@ -70,7 +82,6 @@ class OptimiseCommand extends Command
             }
 
             $ext = $file->getExtension();
-
             if ($file->isFile() && in_array($ext, ['gif', 'jpg', 'jpeg', 'png'])) {
                 $paths[] = [$path, $ext];
             }
@@ -108,12 +119,12 @@ class OptimiseCommand extends Command
     {
         return [
             new InputArgument(
-                'directory',
+                self::DIRECTORY,
                 InputArgument::REQUIRED,
                 'Full path to the directory to optimise'
             ),
             new InputArgument(
-                'skip-cache',
+                self::SKIP_CACHE,
                 InputArgument::OPTIONAL,
                 'Skip cache folder - set 1 to skip cache folders',
                 false
