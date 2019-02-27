@@ -2,7 +2,8 @@
 
 This module will optimise all images uploaded to products pages & CMS pages through Kraken, saving vital disk space and increasing page load speeds. 
 
-You can optimise existing images using the `bin/magento gene:kraken:optimise [directory]` command. *Be sure to take a backup of the directory first as the module will overwrite the existing files.*
+You can optimise existing images using the `bin/magento gene:kraken:optimise [directory] [skipcache]` command. *Be sure to take a backup of the directory first as the module will overwrite the existing files.*
+*Cache files are included by default.*
 
 ## Support
 This module is provided as open source with no support provided.
