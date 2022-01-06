@@ -129,6 +129,8 @@ class Optimise
             'webp' => $webP ? true : false
         ]);
 
+        $this->logger->debug("Kraken Successful for " . $filePath . print_r($response, true));
+
         if (!is_array($response) || empty($response['kraked_url'])) {
             $this->logger->debug("Invalid response from Kraken for " . $filePath . ". " . print_r($response, true));
             return false;
