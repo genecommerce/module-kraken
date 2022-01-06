@@ -30,3 +30,6 @@ If Kraken does not return a valid response, [the error is logged](https://github
 This module was built by [GENE Commerce](http://www.gene.co.uk/).
 
 - [Aidan Threadgold (Lead Developer)](https://twitter.com/AidanThreadgold)
+
+## Change Log
+1.0.6: Add support for WebP Images
