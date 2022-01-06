@@ -15,6 +15,7 @@ use Magento\Config\Model\Config\Backend\Encrypted;
 class Optimise
 {
     const ACTIVE_CONFIG_PATH = 'gene_kraken/general/active';
+    const WEBP_CONFIG_PATH = 'gene_kraken/general/enable_webp';
     const KEY_CONFIG_PATH = 'gene_kraken/api/key';
     const SECRET_CONFIG_PATH = 'gene_kraken/api/secret';
 
@@ -107,6 +108,8 @@ class Optimise
      */
     public function byPath($filePath, $extension = null)
     {
+        $webP = $this->getConfigVal(self::WEBP_CONFIG_PATH);
+
         if (!$extension) {
             $extension = pathinfo($filePath, PATHINFO_EXTENSION);
         }
@@ -121,8 +124,9 @@ class Optimise
 
         $response = $this->getKraken()->upload([
             'file' => $filePath,
+            'wait' => true,
             'lossy' => true,
-            'wait' => true
+            'webp' => $webP ? true : false
         ]);
 
         if (!is_array($response) || empty($response['kraked_url'])) {
